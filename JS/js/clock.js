@@ -18,3 +18,4 @@ setInterval(getTime, 1000);
 
 // xx초 후에 실행
 //setTimeout(getTime,5000);
+

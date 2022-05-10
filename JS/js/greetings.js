@@ -36,6 +36,11 @@ function loginClick(){
 // [[Prototype]]: SubmitEvent
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+function paintGreetings(username){
+    greeting.classList.remove(HIDDEN_CLASSNAME);
+    greeting.innerText = `hello ${username}`;
+}
+
 function onLoginSubmit(event){
     // preventDefault() submit 새로고침을 막아주는 함수
     event.preventDefault();
@@ -49,10 +54,6 @@ function onLoginSubmit(event){
 function handleLinkClick(event){
     event.preventDefault();
     console.dir(event);
-}
-function paintGreetings(username){
-    greeting.classList.remove(HIDDEN_CLASSNAME);
-    greeting.innerText = `hello ${username}`;
 }
 // loginButton.addEventListener("click",loginClick);
 // loginForm.addEventListener("submit",onLoginSubmit);
