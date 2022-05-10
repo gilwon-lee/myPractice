@@ -4,7 +4,6 @@ const images = [
 const todayImage = images[Math.floor(Math.random()*images.length)];
 
 const bgImage = document.createElement("img");
-console.log(bgImage);
 
 bgImage.src = `img/${todayImage}`;
 
