@@ -1,5 +1,5 @@
 
-const apiId ="d19177ddfdac4a06d3edbb86696e667a";
+const apiId ="***";
 function onGeoOk(position){
     const lat =position.coords.latitude;
     const lng =position.coords.longitude;
