@@ -9,10 +9,30 @@
 
   <!-- web.xml -> dispatcher-servlet.xml -> IndexController.java -> index.jsp -->
   <!-- dispatcher 설정 -->
+  
+    <listener>
+	  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/spring/service-context.xml
+			/WEB-INF/spring/security-context.xml
+		</param-value>
+	</context-param>
+  
+  
   <servlet>
   <servlet-name>dispatcher</servlet-name>
   	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>/WEB-INF/spring/servlet-context.xml</param-value>
+  	</init-param>
+  	<!-- 톰캣일 실행될 떄 서블릿 실행 -->
+  	<load-on-startup>1</load-on-startup>
   </servlet>
+  
   <servlet-mapping>
   	<servlet-name>dispatcher</servlet-name>
   	<url-pattern>/</url-pattern>
