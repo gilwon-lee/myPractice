@@ -12,25 +12,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.connector.Response;
 
 //annotation
-@WebServlet("/hi")
-public class Nana extends HttpServlet {
+@WebServlet("/notice-reg")
+public class Notice_reg extends HttpServlet {
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		resp.setCharacterEncoding("UTF-8");
+//		resp.setCharacterEncoding("UTF-8");
+//		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = resp.getWriter();
 		
-		int cnt = 5;
-		String cnt_ =req.getParameter("cnt");
-		if(cnt_!=null && !cnt_.equals("")){
-			cnt =Integer.parseInt(cnt_);
-		}
+		String title =req.getParameter("title");
+		String content =req.getParameter("content");
+		System.out.println(title);
+		out.println("제목:"+title);
+		out.println("내용:"+content);
 
-		for(int i=0;i<cnt;i++) {
-			out.println(i+" 안녕<br/>");
-		}
-		
 	}
 }
