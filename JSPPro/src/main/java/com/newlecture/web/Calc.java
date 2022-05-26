@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-/*Application/Session/Cookie
+/*
+Application/Session/Cookie
 
 Application : 전역 변수로 사용할 때,  생명주기 WAS, 저장위치 WAS서버의 메모리
 Session : 세션 범위에 저장(접속자 마다 공간이 달라짐), 생명주기 세션, 저장위치 WAS서버의 메모리
@@ -86,6 +87,8 @@ public class Calc extends HttpServlet {
 		valueCookie.setMaxAge(24*60*60);
 		resp.addCookie(valueCookie);
 		resp.addCookie(opCookie);
+		
+		resp.sendRedirect("calc.html");
 		}
 		
 		
