@@ -1,15 +1,16 @@
 package com.newlecture.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 
 /*
@@ -33,66 +34,48 @@ public class Calc3 extends HttpServlet {
 //		ServletContext application = req.getServletContext();
 //		HttpSession session = req.getSession();
 		Cookie[] cookies = req.getCookies();
-		 
-		resp.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = resp.getWriter();
+
+		String value =req.getParameter("value");
+		String operator =req.getParameter("operator");
+		String dot =req.getParameter("dot");
 		
-		String v_ =req.getParameter("v");
-		String op =req.getParameter("operator");
+		String exp ="";
 		
-		int v =0;
-		if(!v_.equals(""))
-			v = Integer.parseInt(v_);
-		if(op.equals("=")) {
-//			int x = (Integer)application.getAttribute("value");
-//			int x = (Integer)session.getAttribute("value");
-			int x =0;
-			for(Cookie c:cookies)
-				if(c.getName().equals("value")) {
-				x = Integer.parseInt(c.getValue());
-				break;
-				}
-			int y = v;
-			
-//			String operator =(String)application.getAttribute("op");
-//			String operator =(String)session.getAttribute("op");
-			String operator ="";
+		if(cookies !=null) {
 			for(Cookie c:cookies) 
-				if(c.getName().equals("op")) {
-					operator = c.getValue();
+				if(c.getName().equals("exp")) {
+					exp = c.getValue();
 					break;
 				}
+		};		
+		
+		if(operator!=null && operator.equals("=")) {
+			ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+			try {
+				exp = String.valueOf(engine.eval(exp));
+			} catch (ScriptException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(operator!=null && operator.equals("C")) {
+			exp = "";
 			
-			int result = 0;
-			if(operator.equals("+"))
-				result=x+y;
-			else	
-				result=x-y;	
-			out.println("result is "+result);
+					
 		}
 		else {
-		
-//		application.setAttribute("value", v);
-//		application.setAttribute("op", op);
-		
-//		session.setAttribute("value", v);
-//		session.setAttribute("op", op);
-		
-		Cookie valueCookie = new Cookie("value",String.valueOf(v));
-		Cookie opCookie = new Cookie("op",op);
-//		쿠키를 특정 경로에서만 사용할 떄
-		valueCookie.setPath("/calc");
-		opCookie.setPath("/calc");
-//		쿠기의 유지 시간 설정
-		valueCookie.setMaxAge(24*60*60);
-		resp.addCookie(valueCookie);
-		resp.addCookie(opCookie);
-		
-		resp.sendRedirect("calc.html");
+			exp += (value==null)?"":value;
+			exp += (operator==null)?"":operator;
+			exp += (dot==null)?"":dot;
 		}
 		
-		
+		Cookie expCookie = new Cookie("exp",exp);
+		 if(operator!=null && operator.equals("C")) {
+				expCookie.setMaxAge(0);	
+		}
+		expCookie.setPath("/");
+		resp.addCookie(expCookie);
+		resp.sendRedirect("calcpage");
+		}
 
-
-	}
 }
