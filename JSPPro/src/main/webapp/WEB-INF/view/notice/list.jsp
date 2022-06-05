@@ -1,37 +1,36 @@
-<%-- <%@page import="java.util.Date"%>
+<%@page import="com.newlecture.web.entity.Notice"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%> --%>
+<%@page import="java.sql.Connection"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%
-
-	int id = Integer.parseInt(request.getParameter("id"));
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ <%
 	String url = "jdbc:oracle:thin:@localhost:1521/xe";
-	String sql = "SELECT * FROM NOTICE WHERE ID=? ";
+	String sql = "SELECT * FROM NOTICE ";
 	Class.forName("oracle.jdbc.driver.OracleDriver");
 	String uid = "NEWLEC";
 	String pwd = "11111";
 	Connection con = DriverManager.getConnection(url,uid, pwd);
 	PreparedStatement st = con.prepareStatement(sql);
-	st.setInt(1, id);
 	ResultSet rs = st.executeQuery();
 	
+	while(rs.next()){
 	String title = rs.getString("TITLE");
 	Date regDate = rs.getDate("REGDATE");
 	String writerId = rs.getString("WRITER_ID");
 	String hit = rs.getString("HIT");
 	String content = rs.getString("CONTENT");
-	
-	rs.close();
+	}
+  	rs.close();
 	st.close();
 	con.close();
-
-%> --%>
+%>
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>코딩 전문가를 만들기 위한 온라인 강의 시스템</title>
     <meta charset="UTF-8">
@@ -53,7 +52,7 @@
 <body>
     <!-- header 부분 -->
 
-	<header id="header">
+    <header id="header">
         
         <div class="content-container">
             <!-- ---------------------------<header>--------------------------------------- -->
@@ -61,7 +60,6 @@
             <h1 id="logo">
                 <a href="/index.html">
                     <img src="/images/logo.png" alt="뉴렉처 온라인" />
-
                 </a>
             </h1>
 
@@ -157,78 +155,108 @@
 			</aside>
 			<!-- --------------------------- main --------------------------------------- -->
 
+
+
+		<main class="main">
+			<h2 class="main title">공지사항</h2>
 			
+			<div class="breadcrumb">
+				<h3 class="hidden">경로</h3>
+				<ul>
+					<li>home</li>
+					<li>고객센터</li>
+					<li>공지사항</li>
+				</ul>
+			</div>
+			
+			<div class="search-form margin-top first align-right">
+				<h3 class="hidden">공지사항 검색폼</h3>
+				<form class="table-form">
+					<fieldset>
+						<legend class="hidden">공지사항 검색 필드</legend>
+						<label class="hidden">검색분류</label>
+						<select name="f">
+							<option  value="title">제목</option>
+							<option  value="writerId">작성자</option>
+						</select> 
+						<label class="hidden">검색어</label>
+						<input type="text" name="q" value=""/>
+						<input class="btn btn-search" type="submit" value="검색" />
+					</fieldset>
+				</form>
+			</div>
+			
+			<div class="notice margin-top">
+				<h3 class="hidden">공지사항 목록</h3>
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="w60">번호</th>
+							<th class="expand">제목</th>
+							<th class="w100">작성자</th>
+							<th class="w100">작성일</th>
+							<th class="w60">조회수</th>
+						</tr>
+					</thead>
+					<tbody>
 
+					<%-- <%
+					List<Notice> list = (List<Notice>)request.getAttribute("list");
+					for(Notice n :list) {
+						pageContext.setAttribute("n", n);
+					
+						
+					%> --%>
+<%-- 					<c:forEach items="${list}" var="n" begin="0" end="1" varStatus="st"> --%>
+					<c:forEach items="${list}" var="n">
+					<tr>
+						<td>${n.id}</td>
+						<td class="title indent text-align-left"><a href="detail?id=${n.id}">${n.title}</a></td>
+						<td>${n.writerId}</td>
+						<td>${n.regDate}</td>
+						<td>${n.hit}</td>
+					</tr>
+					</c:forEach>
+					<%-- <% }%> --%>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="indexer margin-top align-right">
+				<h3 class="hidden">현재 페이지</h3>
+				<div><span class="text-orange text-strong">1</span> / 1 pages</div>
+			</div>
 
-			<main>
-				<h2 class="main title">공지사항</h2>
-				
-				<div class="breadcrumb">
-					<h3 class="hidden">breadlet</h3>
-					<ul>
-						<li>home</li>
-						<li>고객센터</li>
-						<li>공지사항</li>
-					</ul>
-				</div>
-				
-				<div class="margin-top first">
-						<h3 class="hidden">공지사항 내용</h3>
-						<table class="table">
-							<tbody>
-								<tr>
-									<th>제목</th>
-									<td class="text-align-left text-indent text-strong text-orange" colspan="3">${n.title}</td>
-								</tr>
-								<tr>
-									<th>작성일</th>
-									<td class="text-align-left text-indent" colspan="3">${n.regDate}</td>
-								</tr>
-								<tr>
-									<th>작성자</th>
-									<td>${n.writerId}</td>
-									<th>조회수</th>
-									<td>${n.hit}</td>
-								</tr>
-								<tr>
-									<th>첨부파일</th>
-									<td colspan="3"></td>
-								</tr>
-								<tr class="content">
-									<td colspan="4"><br/>
-									<a href="http://www.newlecture.com/resource/spring2.zip"><b><u><font size="5" color="#dd8a00">${n.content}</font></u></b></a></div><div><br></div><div><br></div></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					
-					<div class="margin-top text-align-center">
-						<a class="btn btn-list" href="list.html">목록</a>
-					</div>
-					
-					<div class="margin-top">
-						<table class="table border-top-default">
-							<tbody>
-								
-								<tr>
-									<th>다음글</th>
-									<td colspan="3"  class="text-align-left text-indent">다음글이 없습니다.</td>
-								</tr>
-								
-									
-								
-								
-								<tr>
-									<th>이전글</th>
-									<td colspan="3"  class="text-align-left text-indent"><a class="text-blue text-strong" href="">스프링 DI 예제 코드</a></td>
-								</tr>
-								
-								
-							</tbody>
-						</table>
-					</div>			
-					
-			</main>		
+			<div class="margin-top align-center pager">	
+	<c:set var="page" value="${(param.p==null)?1:param.p}"/>
+	<c:set var="startNum" value="${page-(page-1)%5}"/>
+	<c:set var="lastNum" value="23"/>
+		
+	<div>
+		<c:if test="${startNum>1}">
+			<a href="?p=${startNum-5}&t=&q=" class="btn btn-next">이전</a>
+		</c:if>
+		<c:if test="${startNum<=1}">
+			<span class="btn btn-next" onclick="alert('이전 페이지가 없습니다.');">이전</span>
+		</c:if>
+	</div>
+	
+	<ul class="-list- center">
+		<c:forEach begin="0" end="4" var="i">
+			<li><a class="-text- orange bold" href="?p=${startNum+i}&t=&q=" >${startNum+i}</a></li>
+		</c:forEach>		
+	</ul>
+		<div>
+			<c:if test="${startNum+5<lastNum}">
+				<a href="?p=${startNum+5}&t=&q=" class="btn btn-next">다음</a>
+			</c:if>
+			<c:if test="${startNum+5>=lastNum}">
+				<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
+			</c:if>
+		</div>
+		</div>
+	</main>
+		
 			
 		</div>
 	</div>
@@ -270,4 +298,3 @@
     </body>
     
     </html>
-    
