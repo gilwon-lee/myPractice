@@ -5,6 +5,10 @@
 <%@page import="java.sql.Connection"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!-- JSTL 함수사용 -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%-- <%
 
 	int id = Integer.parseInt(request.getParameter("id"));
@@ -203,7 +207,7 @@
 					</div>
 					
 					<div class="margin-top text-align-center">
-						<a class="btn btn-list" href="list.html">목록</a>
+						<a class="btn btn-list" href="list">목록</a>
 					</div>
 					
 					<div class="margin-top">
