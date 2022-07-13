@@ -13,7 +13,7 @@ import com.newlecture.web.entity.Notice;
 import com.newlecture.web.entity.NoticeView;
 
 public class NoticeService {
-	
+	//test
 	public int removeNoticeAll(int[] ids) {
 		return 0;
 	}
