@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- mvc model 1 형식 
+<<<<<<< HEAD
 	int num = 0; 
 	String num_ =request.getParameter("n");
 	String result ="";
@@ -13,7 +14,9 @@
 	else{
 	result="짝수";
 	} -->
-<%pageContext.setAttribute("result", "hello");%>
+<%
+pageContext.setAttribute("result", "hello");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,5 +37,6 @@
 	${requestScope.result}<br/> 
 	${empty param.n?"값이 비었습니다":param.n}<br/>
 	${header.accept}<br/>
+
 </body>
 </html>

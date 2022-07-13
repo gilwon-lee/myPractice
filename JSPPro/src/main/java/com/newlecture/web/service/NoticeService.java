@@ -13,6 +13,7 @@ import com.newlecture.web.entity.Notice;
 import com.newlecture.web.entity.NoticeView;
 
 public class NoticeService {
+
 	//test1
 	public int removeNoticeAll(int[] ids) {
 		return 0;
@@ -35,6 +36,7 @@ public class NoticeService {
 	List<Notice> getNoticeNewestList(){
 		return null;
 	}
+	
 	
 	public List<NoticeView>	getNoticeList(){
 		return  getNoticeList("TITLE","",1);

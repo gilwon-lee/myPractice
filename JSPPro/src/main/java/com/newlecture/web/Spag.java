@@ -27,7 +27,9 @@ public class Spag extends HttpServlet{
 		}
 		else{
 			result="짝수";
-		} 
+
+		result="홀수";
+		}
 		
 		request.setAttribute("result", result);
 		
@@ -39,6 +41,7 @@ public class Spag extends HttpServlet{
 		notice.put("title", "EL표기");
 		request.setAttribute("notice", notice);
 		//forward
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("spaghetti.jsp");
 		dispatcher.forward(request, resp);
 		
